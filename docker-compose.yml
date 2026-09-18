@@ -1,0 +1,24 @@
+services:
+  laya:
+    build: .
+    container_name: laya
+    ports:
+      - "8100:8100"
+    volumes:
+      # model weights survive container rebuilds (~1.7 GB download on first start)
+      - hf-cache:/cache/huggingface
+    environment:
+      - OMP_NUM_THREADS=4
+      - HF_HOME=/cache/huggingface
+    restart: unless-stopped
+    # CPU-only by default. Uncomment for GPU (needs nvidia-container-toolkit):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes:
+  hf-cache:
