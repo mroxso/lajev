@@ -17,6 +17,7 @@ pass, no text generation. Runs CPU-only out of the box.
 | `POST /triage?message=...` | Preset: support ticket triage (intent, urgency, frustration, churn) |
 | `POST /guard?prompt=...` | Preset: prompt guardrails (jailbreak/injection detection) |
 | `POST /moderate?post=...` | Preset: content moderation |
+| `POST /v1/systemone` | TypeSafe-API-compatible endpoint (`state` + `model` + `questions` → `answers` + `usage`). Any `Authorization` header, or none, is accepted — this deployment has no API keys to check. |
 
 ## Getting started
 
