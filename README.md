@@ -10,24 +10,24 @@ pass, no text generation. Runs CPU-only out of the box.
 
 ## Endpoints
 
-| Route | Zweck |
+| Route | Purpose |
 |---|---|
-| `GET /health` | Status + ob das Modell geladen ist |
-| `POST /predict` | Beliebige Fragen im Laya-Schema (`choice` / `score` / `noul`) |
-| `POST /triage?message=...` | Preset: Support-Ticket-Triage (Intent, Dringlichkeit, Frust, Churn) |
-| `POST /guard?prompt=...` | Preset: Prompt-Guardrails (Jailbreak/Injection-Erkennung) |
-| `POST /moderate?post=...` | Preset: Content-Moderation |
+| `GET /health` | Status + whether the model is loaded |
+| `POST /predict` | Arbitrary questions in the Laya schema (`choice` / `score` / `noul`) |
+| `POST /triage?message=...` | Preset: support ticket triage (intent, urgency, frustration, churn) |
+| `POST /guard?prompt=...` | Preset: prompt guardrails (jailbreak/injection detection) |
+| `POST /moderate?post=...` | Preset: content moderation |
 
-## Start
+## Getting started
 
 ```bash
 docker compose up -d --build
 ```
 
-Der erste Start lädt die Modell-Weights (~1,7 GB) von Hugging Face in den
-`hf-cache`-Volume — danach sind Rebuilds ohne Re-Download möglich.
+The first startup downloads the model weights (~1.7 GB) from Hugging Face
+into the `hf-cache` volume — after that, rebuilds don't re-download.
 
-## Beispiel
+## Example
 
 ```bash
 curl -s localhost:8100/predict -H 'Content-Type: application/json' -d '{
@@ -62,12 +62,12 @@ curl -s localhost:8100/predict -H 'Content-Type: application/json' -d '{
 
 ## GPU (optional)
 
-Standard ist CPU. Für GPU den auskommentierten `deploy`-Block in
-`docker-compose.yml` aktivieren (braucht `nvidia-container-toolkit`).
+CPU-only by default. To use a GPU, uncomment the `deploy` block in
+`docker-compose.yml` (requires `nvidia-container-toolkit`).
 
-## Grenzen
+## Limitations
 
-- Nur Englisch, max. 512 Token pro Frage
-- Keine Textgenerierung — Arithmetik/Datum in normalem Code lösen
-- Modell ist frisch (Apache 2.0, Convai Innovations); Benchmark-Zahlen sind
-  Eigenangaben des Autors
+- English only, max 512 tokens per question
+- No text generation — solve arithmetic/dates in regular code
+- The model is brand new (Apache 2.0, Convai Innovations); benchmark numbers
+  are the author's own claims
