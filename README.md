@@ -61,6 +61,29 @@ curl -s localhost:8100/predict -H 'Content-Type: application/json' -d '{
 }'
 ```
 
+TypeSafe-compatible call to `/v1/systemone` (same shape as `api.typesafe.ai/v1/systemone`; `model` and `Authorization` are accepted but ignored):
+
+```bash
+curl -s localhost:8100/v1/systemone \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer sk-anything' \
+  -d '{
+  "model": "jev-latest",
+  "state": "We were billed twice for March. Refund or we cancel.",
+  "questions": {
+    "urgency": {
+      "type": "score",
+      "instructions": "How urgent is this request?",
+      "criteria": ["not urgent", "soon", "critical deadline or blocking issue"]
+    },
+    "churn_risk": {
+      "type": "noul",
+      "instructions": "Does the user threaten to cancel or leave?"
+    }
+  }
+}'
+```
+
 ## GPU (optional)
 
 CPU-only by default. To use a GPU, uncomment the `deploy` block in
